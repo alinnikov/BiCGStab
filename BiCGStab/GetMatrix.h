@@ -9,7 +9,7 @@ struct CSR_matrix {
 	int num_values;
 	int *array_rows;
 	int *array_columns;
-	float *array3;
+	float *array_values;
 };
 void get_csr_matrix(CSR_matrix);
 int get_num_rows();

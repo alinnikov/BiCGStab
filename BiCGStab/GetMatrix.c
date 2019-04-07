@@ -7,7 +7,7 @@ int get_num_rows() {
 	FILE *matrix_file;
 	char str[1024];
 	int count_of_values = 0;
-	int num_rows1 = 0;
+	int num_rows = 0;
 
 	if ((matrix_file = fopen("matrix.rb", "rb")) == NULL) {
 		printf("Cannot open file.\n");
@@ -23,10 +23,10 @@ int get_num_rows() {
 	{
 		if (!matrix_file) break;    //÷òîáû íå äåëàë ëèøíåãî
 		count_of_values++;
-		if (count_of_values == 2) sscanf(str, "%d", &num_rows1);
+		if (count_of_values == 2) sscanf(str, "%d", &num_rows);
 	}
 	fclose(matrix_file);
-	return num_rows1;
+	return num_rows;
 }
 
 int get_num_values() {
@@ -63,7 +63,7 @@ void get_csr_matrix(struct CSR_matrix *m) {
 	m->num_values = get_num_values();
 	m->array_rows = (int*)malloc((m->num_rows + 1) * sizeof(int));
 	m->array_columns = (int*)malloc((m->num_values) * sizeof(int));
-	m->array3 = (float*)malloc((m->num_values + 1) * sizeof(float));
+	m->array_values = (float*)malloc((m->num_values + 1) * sizeof(float));
 
 	//Îòêğûâàåì ôàéë ñ ìàòğèöåé
 	FILE *fp;
@@ -101,10 +101,10 @@ void get_csr_matrix(struct CSR_matrix *m) {
 	k = 0;
 	while (!feof(fp)) {
 		if (fscanf(fp, "%s", str))
-			sscanf(str, "%f", &m->array3[k]);
+			sscanf(str, "%f", &m->array_values[k]);
 		//printf("\n%f", array3[k]);
 		k++;
 	}
 
-	printf("%f", m->array3[k - 1]);
+	//printf("%f", m->array3[k - 1]);
 }
