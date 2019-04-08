@@ -2,14 +2,14 @@
 
 
 
-int get_num_rows() {
+int get_num_rows(char *name) {
 
 	FILE *matrix_file;
 	char str[1024];
 	int count_of_values = 0;
-	int num_rows1 = 0;
+	int num_rows = 0;
 
-	if ((matrix_file = fopen("matrix.rb", "rb")) == NULL) {
+	if ((matrix_file = fopen(name, "rb")) == NULL) {
 		printf("Cannot open file.\n");
 	}
 	//Пропускаем первые 2 строки
@@ -23,19 +23,19 @@ int get_num_rows() {
 	{
 		if (!matrix_file) break;    //чтобы не делал лишнего
 		count_of_values++;
-		if (count_of_values == 2) sscanf(str, "%d", &num_rows1);
+		if (count_of_values == 2) sscanf(str, "%d", &num_rows);
 	}
 	fclose(matrix_file);
-	return num_rows1;
+	return num_rows;
 }
 
-int get_num_values() {
+int get_num_values(char *name) {
 	FILE *matrix_file;
 	char str[1024];
 	int count_of_values = 0;
 	int num_rows = 0;
 
-	if ((matrix_file = fopen("matrix.rb", "rb")) == NULL) {
+	if ((matrix_file = fopen(name, "rb")) == NULL) {
 		printf("Cannot open file.\n");
 	}
 	//Пропускаем первые 2 строки
@@ -56,23 +56,22 @@ int get_num_values() {
 }
 
 //Получаем CSR-матрицу
-void get_csr_matrix(struct CSR_matrix *m) {
+void get_csr_matrix(struct CSR_matrix *m, char *name) {
 
 	//Создаем переменные структуры
-	m->num_rows = get_num_rows();
-	m->num_values = get_num_values();
+	m->num_rows = get_num_rows(name);
+	m->num_values = get_num_values(name);
 	m->array_rows = (int*)malloc((m->num_rows + 1) * sizeof(int));
 	m->array_columns = (int*)malloc((m->num_values) * sizeof(int));
-	m->array3 = (float*)malloc((m->num_values + 1) * sizeof(float));
+	m->array_values = (double*)malloc((m->num_values + 1) * sizeof(double));
 
 	//Открываем файл с матрицей
 	FILE *fp;
 	char str[1024];
 	int k = 0;
-	if ((fp = fopen("matrix.rb", "rb")) == NULL) {
+	if ((fp = fopen(name, "rb")) == NULL) {
 		printf("Cannot open file.\n");
 	}
-
 	//Пропускаем строки с технической информацией о матрице
 	for (int i = 0; i < 4; i++)
 	{
@@ -101,10 +100,10 @@ void get_csr_matrix(struct CSR_matrix *m) {
 	k = 0;
 	while (!feof(fp)) {
 		if (fscanf(fp, "%s", str))
-			sscanf(str, "%f", &m->array3[k]);
+			sscanf(str, "%lf", &m->array_values[k]);
 		//printf("\n%f", array3[k]);
 		k++;
 	}
 
-	printf("%f", m->array3[k - 1]);
+	//printf("%lf", m->array_values[k - 1]);
 }
