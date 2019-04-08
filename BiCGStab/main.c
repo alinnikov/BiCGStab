@@ -6,8 +6,8 @@ int main(void)
 	char name[] = "matrix.rb";
 	get_csr_matrix(&m, name);
 
-	double *x = (double*)malloc((m.num_rows+1) * sizeof(double));
-	double *b = (double*)malloc((m.num_rows+1) * sizeof(double));
+	double *x = (double*)malloc((m.num_rows) * sizeof(double));
+	double *b = (double*)malloc((m.num_rows) * sizeof(double));
 
 
 	for (int i = 0; i < m.num_rows; i++) {
@@ -16,7 +16,7 @@ int main(void)
 
 	multiplicate(&m, x, b);
 
-	//printf("%d", m.num_rows);
+	//printf("%f", b[m.num_rows]);
 	//getchar();
 	return 0;
 }
