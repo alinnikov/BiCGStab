@@ -4,5 +4,5 @@
 #pragma once
 #ifndef MULTIPLICATE	
 #define MULTIPLICATE
-int multiplicate(struct CSR_matrix *Matrix, float *x, float *b);
+int multiplicate(struct CSR_matrix *Matrix, double *x, double *b);
 #endif
