@@ -1,4 +1,5 @@
 #include "GetMatrix.h"
+#include "multiplicate.h"
 
 int main(void)
 {
@@ -11,12 +12,13 @@ int main(void)
 
 
 	for (int i = 0; i <= m.num_rows; i++) {
-		x[i] = 1.0;
+		x[i] = 3.0;
 	}
 	//printf("%lf", x[m.num_rows]);
 	
 	multiplicate(&m, x, b);
-	
+
 	BiCGStab(&m, b);
 	return 0;
+	getchar();
 }

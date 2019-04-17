@@ -102,4 +102,8 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 		}
 		k++;
 	}
+	//printf("Value0 = %lf\n", m->array_values[0]);
+	//printf("Valuek = %lf\n", m->array_values[k-1]);
+	//printf("k = %d\n", k-1);
+	//printf("N = %d\n", m->num_values);
 }
