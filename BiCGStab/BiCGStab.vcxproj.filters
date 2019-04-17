@@ -21,6 +21,9 @@
     <ClInclude Include="Multiplicate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BiCGStab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GetMatrix.c">
@@ -30,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Multiplicate.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BiCGStab.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

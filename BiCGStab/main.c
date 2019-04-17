@@ -10,13 +10,13 @@ int main(void)
 	double *b = (double*)malloc((m.num_rows) * sizeof(double));
 
 
-	for (int i = 0; i < m.num_rows; i++) {
+	for (int i = 0; i <= m.num_rows; i++) {
 		x[i] = 1.0;
 	}
-
+	//printf("%lf", x[m.num_rows]);
+	
 	multiplicate(&m, x, b);
-
-	//printf("%f", b[m.num_rows]);
-	//getchar();
+	
+	BiCGStab(&m, b);
 	return 0;
 }

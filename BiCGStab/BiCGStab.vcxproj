@@ -85,7 +85,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -116,10 +121,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BiCGStab.h" />
     <ClInclude Include="GetMatrix.h" />
     <ClInclude Include="Multiplicate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BiCGStab.c" />
     <ClCompile Include="GetMatrix.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Multiplicate.c" />

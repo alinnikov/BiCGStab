@@ -1,7 +1,6 @@
 #include "GetMatrix.h"
 
 
-
 int get_num_rows(char *name) {
 
 	FILE *matrix_file;
@@ -64,7 +63,6 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 	m->array_rows = (int*)malloc((m->num_rows+1) * sizeof(int));
 	m->array_columns = (int*)malloc((m->num_values) * sizeof(int));
 	m->array_values = (double*)malloc((m->num_values) * sizeof(double));
-
 	//Открываем файл с матрицей
 	FILE *fp;
 	char str[1024];
@@ -84,31 +82,24 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 			sscanf(str, "%d", &m->array_rows[k]);
 			m->array_rows[k]--;
 		}
-		//printf("\n%d", m->array_rows[k]);
 		k++;
-		
 	}
-	//printf("%d", m->array_rows[k-1]);
 	//Получаем массив столбцов
 	k = 0;
 	while (!feof(fp) && k <= m->num_values) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%d", &m->array_columns[k]);
 			m->array_columns[k]--;
-		//	printf("\n%d", m->array_columns[k]);
 		}
-		
 		k++;
 	}
 
 	//Получаем массив значений
 	k = 0;
 	while (!feof(fp)) {
-		if (fscanf(fp, "%s", str))
+		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%lf", &m->array_values[k]);
-		//printf("\n%f", array3[k]);
+		}
 		k++;
 	}
-	//printf("%lf", m->array_values[0]);
-	//printf("%lf", m->array_values[k-1]);
 }

@@ -1,5 +1,6 @@
 #include <stdio.h>  
 #include <io.h> 
+#include <malloc.h>
 #pragma once
 #ifndef GET_MATRIX
 #define GET_MATRIX
