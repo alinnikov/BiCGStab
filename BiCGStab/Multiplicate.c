@@ -18,7 +18,7 @@ int multiplicate(struct CSR_matrix *Matrix, double *x, double *b) {
 double scalar_multiplicate(double *a, double *b, int num) {
 	double result=0;
 	
-	for (int i=0; i < num; i++) {
+	for (int i=0; i <= num; i++) {
 		result += a[i] * b[i];
 	}
 	return result;

@@ -18,7 +18,7 @@ double s(struct CSR_matrix **m, double *r_n, double *p_n, double alpha_n, double
 	//double *Ap_n = (double*)malloc(((*m)->num_rows) * sizeof(double));
 	multiplicate(*m, p_n, Ap_n);
 
-	for (int i = 0; i < (*m)->num_rows; i++) {
+	for (int i = 0; i <= (*m)->num_rows; i++) {
 		s_n[i] = r_n[i] - alpha_n * Ap_n[i];
 	}
 
@@ -66,9 +66,8 @@ int BiCGStab(struct CSR_matrix *m, double *b) {
 
 	//Задаём начальный вектор
 	for (int i = 0; i <= m->num_rows; i++) {
-		x_n[i] = 10;
+		x_n[i] = 1000;
 	}
-	
 	// Задаём A*x0
 
 	multiplicate(m, x_n, multi_result);
@@ -88,23 +87,23 @@ int BiCGStab(struct CSR_matrix *m, double *b) {
 
 		omega_n = omega(&m, s_n, As_n);
 
-		for (int i = 0; i < m->num_rows; i++) {
+		for (int i = 0; i <= m->num_rows; i++) {
 			x_n_plus[i] = x_n[i] + alpha_n * p_n[i] + omega_n * s_n[i];
 		}
 
 		multiplicate(m, s_n, As_n);
-		for (int i = 0; i < m->num_rows; i++) {
+		for (int i = 0; i <= m->num_rows; i++) {
 			r_n_plus[i] = s_n[i] - omega_n * As_n[i];
 		}
 
 		beta_n = beta(&m, r_n_plus, r_0_help, r_n, alpha_n, omega_n);
 
 		multiplicate(m, s_n, Ap_n);
-		for (int i = 0; i < m->num_rows; i++) {
+		for (int i = 0; i <= m->num_rows; i++) {
 			p_n_plus[i] = r_n_plus[i] - beta_n * omega_n * Ap_n[i] + beta_n * p_n[i];
 		}
 
-		for (int i = 0; i < m->num_rows; i++) {
+		for (int i = 0; i <= m->num_rows; i++) {
 			p_n[i] = p_n_plus[i];
 			r_n[i] = r_n_plus[i];
 			x_n[i] = x_n_plus[i];
@@ -112,13 +111,13 @@ int BiCGStab(struct CSR_matrix *m, double *b) {
 		//printf("%lf\n", x_n[0]);
 
 		double abs = 0;
-		for (int i = 0; i < m->num_rows; i++) {
+		for (int i = 0; i <= m->num_rows; i++) {
 		abs += fabs(r_n[i])*fabs(r_n[i]);
 		}
 		L2_norm = sqrt(abs);
-
-	//	printf("\n%lf", L2_norm);
 	}
+	//printf("%lf\n", r_n[m->num_rows]);
+	printf("\n%lf", L2_norm);
 	printf("%lf\n", x_n[0]);
 	return 0;
 }

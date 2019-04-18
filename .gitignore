@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /BiCGStab/My Inspector Results - BiCGStab
 /BiCGStab/My Advisor Results - BiCGStab
+*.rb
