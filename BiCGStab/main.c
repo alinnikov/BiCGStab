@@ -3,6 +3,12 @@
 
 int main(void)
 {
+
+#ifdef _OPENMP
+	printf("OpenMP is supported!\n");
+#endif 
+
+
 	struct CSR_matrix m;
 	char name[] = "matrix.rb";
 	get_csr_matrix(&m, name);
@@ -12,13 +18,13 @@ int main(void)
 
 
 	for (int i = 0; i <= m.num_rows; i++) {
-		x[i] = 3.0;
+		x[i] = 1.0;
 	}
 	//printf("%lf", x[m.num_rows]);
 	
-	multiplicate(&m, x, b);
+	multiplicate(m, x, b);
 
 	BiCGStab(&m, b);
+	free(&m);
 	return 0;
-	getchar();
 }
