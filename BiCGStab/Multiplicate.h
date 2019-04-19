@@ -6,5 +6,6 @@
 #ifndef MULTIPLICATE	
 #define MULTIPLICATE
 int multiplicate(struct CSR_matrix Matrix, double *x, double *b);
-double scalar_multiplicate(double *a, double *b, int num);
+double dot_product(double *a, double *b, int num);
+double *spnv_pointer(struct CSR_matrix Matrix, double *x);
 #endif

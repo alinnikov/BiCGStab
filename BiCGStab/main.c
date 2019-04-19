@@ -1,5 +1,8 @@
 #include "GetMatrix.h"
 #include "multiplicate.h"
+#include <time.h>
+#include <dos.h> 
+
 
 int main(void)
 {
@@ -8,23 +11,33 @@ int main(void)
 	printf("OpenMP is supported!\n");
 #endif 
 
+	unsigned long start = GetTickCount();
 
-	struct CSR_matrix m;
+	struct CSR_matrix m; 
+
+	int count = 100;
+
 	char name[] = "matrix.rb";
-	get_csr_matrix(&m, name);
+	read_csr_matrix(&m, name);
 
 	double *x = (double*)malloc((m.num_rows) * sizeof(double));
-	double *b = (double*)malloc((m.num_rows) * sizeof(double));
+	double *b;
+
+	for (int i = 0; i < count; i++) {
+
+		for (int i = 0; i < m.num_rows; i++) {
+			x[i] = 3.0;
+		}
+		//printf("%lf", x[m.num_rows]);
 
 
-	for (int i = 0; i <= m.num_rows; i++) {
-		x[i] = 1.0;
-	}
-	//printf("%lf", x[m.num_rows]);
+		b = spnv_pointer(m, x);
+
+		BiCGStab(&m, b);
 	
-	multiplicate(m, x, b);
+	}
+	unsigned long delta = GetTickCount() - start;
+	printf("used %lu milliseconds in average\n", delta/count);
 
-	BiCGStab(&m, b);
-	free(&m);
 	return 0;
 }

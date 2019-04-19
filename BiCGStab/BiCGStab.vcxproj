@@ -87,7 +87,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAs>CompileAsC</CompileAs>
-      <Parallelization>false</Parallelization>
+      <Parallelization>true</Parallelization>
       <OpenMP>GenerateParallelCode</OpenMP>
     </ClCompile>
     <Link>

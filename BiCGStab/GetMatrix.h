@@ -12,7 +12,7 @@ struct CSR_matrix {
 	int *array_columns;
 	double *array_values;
 };
-void get_csr_matrix(struct CSR_matrix *m, char *name);
+int read_csr_matrix(struct CSR_matrix *m, char *name);
 int get_num_rows(char *name);
 int get_num_values(char *name);
 #endif

@@ -25,7 +25,7 @@ int get_num_rows(char *name) {
 		if (count_of_values == 2) sscanf(str, "%d", &num_rows);
 	}
 	fclose(matrix_file);
-	return num_rows-1;
+	return num_rows;
 }
 
 int get_num_values(char *name) {
@@ -51,11 +51,11 @@ int get_num_values(char *name) {
 		if (count_of_values == 4) sscanf(str, "%d", &num_values);
 	}
 	fclose(matrix_file);
-	return num_values-1;
+	return num_values;
 }
 
 //Получаем CSR-матрицу
-void get_csr_matrix(struct CSR_matrix *m, char *name) {
+int read_csr_matrix(struct CSR_matrix *m, char *name) {
 
 	//Создаем переменные структуры
 	m->num_rows = get_num_rows(name);
@@ -77,7 +77,7 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 	}
 
 	//Получаем массив строк
-	while (!feof(fp) && k <= m->num_rows+1) {
+	while (!feof(fp) && k < m->num_rows+1) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%d", &m->array_rows[k]);
 			m->array_rows[k]--;
@@ -86,7 +86,7 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 	}
 	//Получаем массив столбцов
 	k = 0;
-	while (!feof(fp) && k <= m->num_values) {
+	while (!feof(fp) && k < m->num_values) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%d", &m->array_columns[k]);
 			m->array_columns[k]--;
@@ -102,6 +102,8 @@ void get_csr_matrix(struct CSR_matrix *m, char *name) {
 		}
 		k++;
 	}
+	return 0;
+
 	//printf("Value0 = %lf\n", m->array_values[0]);
 	//printf("Valuek = %lf\n", m->array_values[k-1]);
 	//printf("k = %d\n", k-1);
