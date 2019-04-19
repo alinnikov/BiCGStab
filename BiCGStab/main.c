@@ -15,11 +15,15 @@ int main(void)
 
 	struct CSR_matrix m; 
 
-	int count = 100;
+	int count = 1;
 
-	char name[] = "matrix.rb";
+	int eps = 0.000000001;
+	int max_iterations = 3000000;
+
+	char name[] = "pdb1HYS.rb";
 	read_csr_matrix(&m, name);
 
+	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));
 	double *x = (double*)malloc((m.num_rows) * sizeof(double));
 	double *b;
 
@@ -27,17 +31,16 @@ int main(void)
 
 		for (int i = 0; i < m.num_rows; i++) {
 			x[i] = 3.0;
+			x_n[i] = 10.0;
 		}
-		//printf("%lf", x[m.num_rows]);
-
 
 		b = spnv_pointer(m, x);
 
-		BiCGStab(&m, b);
+		BiCGStab(&m, b, x_n, eps, max_iterations);
 	
 	}
 	unsigned long delta = GetTickCount() - start;
 	printf("used %lu milliseconds in average\n", delta/count);
-
+	getchar();
 	return 0;
 }
