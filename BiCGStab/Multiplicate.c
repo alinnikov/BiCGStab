@@ -20,7 +20,7 @@ int multiplicate(struct CSR_matrix Matrix, double *x, double *b) {
 // spmv
 double *spnv_pointer(struct CSR_matrix Matrix, double *x) {
 	double *b = calloc((Matrix.num_rows), sizeof(double));
-#pragma omp parallel for num_threads(2)
+#pragma omp parallel for num_threads(1)
 	for (int i = 0; i < Matrix.num_rows; i++)
 	{
 		for (int j = Matrix.array_rows[i]; j < Matrix.array_rows[i + 1]; j++) {
