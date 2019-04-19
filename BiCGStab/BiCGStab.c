@@ -41,8 +41,7 @@ double omega(struct CSR_matrix *m, double *s_n, double *As_n) {
 }
 
 
-int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations){//, double *x_n), double eps, int numbner_of_iterations) {
-//#pragma omp parallel
+int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations) {
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *r_0_help = (double*)malloc((m->num_rows) * sizeof(double));
