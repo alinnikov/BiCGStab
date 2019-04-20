@@ -55,7 +55,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	double beta_n;
 	double r0help_rn;
 
-	double L2_norm = 1;
+	double L2_norm = 1.0;
 	int number_of_iterations = 0;
 	// Задаём A*x0
 
@@ -68,8 +68,9 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 		r_0_help[i] = r_n[i];
 		p_n[i] = r_n[i];
 	}
+
 	//Цикл
-	for (int num = 0; num < max_iterations && L2_norm>eps*eps; num++) {
+	for (int num = 0; num < max_iterations && L2_norm>eps * eps; num++) {
 
 		Ap_n = spnv_pointer(*m, p_n);
 
@@ -98,10 +99,10 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 			p_n[i] = r_n[i] - beta_n * omega_n * Ap_n[i] + beta_n * p_n[i];
 		}
 
-		/*if (number_of_iterations % 1000 == 0) {
+		if (number_of_iterations % 100 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
-		}*/
+		}
 
 		L2_norm = dot_product(r_n,r_n,m->num_rows);
 		number_of_iterations++;
@@ -109,7 +110,6 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 		free(As_n);
 	}
 	
-	//printf("%lf\n", r_n[m->num_rows]);
 	printf("Number of iterations = %d\n", number_of_iterations);
 	printf("L2_norm=%.60lf\n", L2_norm);
 	printf("x[num_rows-1] = %.40lf\n", x_n[m->num_rows-1]);

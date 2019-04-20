@@ -17,7 +17,7 @@ int main(void)
 
 	int count = 1;
 
-	int eps = 0.000000001;
+	double eps = 0.00000001;
 	int max_iterations = 3000000;
 
 	char name[] = "pdb1HYS.rb";
