@@ -126,12 +126,14 @@
     <ClInclude Include="BiCGStab.h" />
     <ClInclude Include="GetMatrix.h" />
     <ClInclude Include="Multiplicate.h" />
+    <ClInclude Include="Preconditioners.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BiCGStab.c" />
     <ClCompile Include="GetMatrix.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Multiplicate.c" />
+    <ClCompile Include="Preconditioners.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

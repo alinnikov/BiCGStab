@@ -2,6 +2,7 @@
 #include <stdio.h>  
 #include <io.h> 
 #include "GetMatrix.h"
+#include "Preconditioners.h"
 
 #pragma once
 #ifndef BISGSTAB	

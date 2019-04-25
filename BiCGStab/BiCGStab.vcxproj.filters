@@ -24,6 +24,9 @@
     <ClInclude Include="BiCGStab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Preconditioners.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GetMatrix.c">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BiCGStab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Preconditioners.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

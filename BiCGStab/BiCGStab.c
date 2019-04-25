@@ -42,14 +42,35 @@ double omega(struct CSR_matrix *m, double *s_n, double *As_n) {
 
 
 int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations) {
+	//Структура с матрицей M
+	
+	struct CSR_matrix LU;
+	LU.num_rows = m->num_rows;
+	LU.num_values = m->num_values;
+	LU.array_rows = (int*)malloc((m->num_rows + 1) * sizeof(int));
+	LU.array_columns = (int*)malloc((m->num_values) * sizeof(int));
+	LU.array_values = (double*)malloc((m->num_values) * sizeof(double));
+	memcpy(LU.array_rows, m->array_rows, (m->num_rows+1) * sizeof(int));
+	memcpy(LU.array_columns, m->array_columns, m->num_values * sizeof(int));
+	memcpy(LU.array_values, m->array_values, m->num_values * sizeof(double));
+
+	double *lu_values = (double*)malloc((m->num_values) * sizeof(double));
+	double *result = (double*)malloc((m->num_rows) * sizeof(double));
+	double *y_n = (double*)malloc((m->num_rows) * sizeof(double));
+	double *z_n = (double*)malloc((m->num_rows) * sizeof(double));
+	ILU0(&LU, lu_values);
+
+	memcpy(LU.array_values, lu_values, m->num_values * sizeof(double));
+
+
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *r_0_help = (double*)malloc((m->num_rows) * sizeof(double));
 	double *p_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *Ax_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *s_n = (double*)malloc((m->num_rows) * sizeof(double));
-	double *As_n = (double*)malloc((m->num_rows) * sizeof(double));
-	double *Ap_n = (double*)malloc((m->num_rows) * sizeof(double));
+	double *Az_n = (double*)malloc((m->num_rows) * sizeof(double));
+	double *Ay_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double alpha_n;
 	double omega_n;
 	double beta_n;
@@ -69,45 +90,52 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 		p_n[i] = r_n[i];
 	}
 
+
+
+
 	//Цикл
 	for (int num = 0; num < max_iterations && L2_norm>eps * eps; num++) {
+		GaussSolve(&LU, p_n, y_n);
 
-		Ap_n = spnv_pointer(*m, p_n);
+
+		Ay_n = spnv_pointer(*m, y_n);
 
 		r0help_rn = dot_product(r_0_help, r_n, m->num_rows);
 
-		alpha_n = alpha(m, r_0_help, r0help_rn, p_n, Ap_n);
+		alpha_n = alpha(m, r_0_help, r0help_rn, y_n, Ay_n);
 
-		s(m, r_n, p_n, alpha_n, s_n, Ap_n);
+		s(m, r_n, p_n, alpha_n, s_n, Ay_n);
 
-		As_n = spnv_pointer(*m, s_n);
+		GaussSolve(&LU, s_n, z_n);
 
-		omega_n = omega(m, s_n, As_n);
+		Az_n = spnv_pointer(*m, s_n);
+
+		omega_n = omega(m, s_n, Az_n);
 
 		for (int i = 0; i < m->num_rows; i++) {
-			x_n[i] = x_n[i] + alpha_n * p_n[i] + omega_n * s_n[i];
+			x_n[i] = x_n[i] + alpha_n * y_n[i] + omega_n * z_n[i];
 		}
 
 
 		for (int i = 0; i < m->num_rows; i++) {
-			r_n[i] = s_n[i] - omega_n * As_n[i];
+			r_n[i] = s_n[i] - omega_n * Az_n[i];
 		}
 	
 		beta_n = beta(m, r0help_rn, r_0_help, r_n, alpha_n, omega_n);
 
 		for (int i = 0; i < m->num_rows; i++) {
-			p_n[i] = r_n[i] - beta_n * omega_n * Ap_n[i] + beta_n * p_n[i];
+			p_n[i] = r_n[i] - beta_n * omega_n * Ay_n[i] + beta_n * p_n[i];
 		}
 
-		if (number_of_iterations % 100 == 0) {
+		if (number_of_iterations % 1 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
 		}
 
 		L2_norm = dot_product(r_n,r_n,m->num_rows);
 		number_of_iterations++;
-		free(Ap_n);
-		free(As_n);
+		free(Ay_n);
+		free(Az_n);
 	}
 	
 	printf("Number of iterations = %d\n", number_of_iterations);
