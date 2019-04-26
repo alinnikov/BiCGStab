@@ -10,6 +10,8 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 	int pr1, pr2;
 	int k;
 
+
+	//»щем диагональные элементы
 	int iptr_count = 0;
 	for (int i = 0; i < Matrix->num_rows; i++) {
 		for (int j = Matrix->array_rows[i]; j < Matrix->array_rows[i + 1]; j++) {
@@ -78,18 +80,47 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 
 
 
-void GaussSolve(struct CSR_matrix *Matrix, double* b, double* result)
+void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 {
-	double newB;
-	memset(result, 0, Matrix->num_rows * sizeof(double));
-	
-		for (int i = 0; i < Matrix->num_rows; i++)
-		{
-			newB = b[i];
-			for (int j = Matrix->array_rows[i]; j < Matrix->array_rows[i + 1] - 1;
-				j++)
-				newB = newB - Matrix->array_values[j] * result[Matrix->array_columns[j]];
-			result[i] = newB / Matrix->array_values[Matrix->array_rows[i + 1] - 1];
+	int s1, s2;
+
+	int *iptr = (int*)malloc((Matrix->num_rows + 1) * sizeof(int));
+	int iptr_count = 0;
+	for (int i = 0; i < Matrix->num_rows; i++) {
+		for (int j = Matrix->array_rows[i]; j < Matrix->array_rows[i + 1]; j++) {
+			if (i == Matrix->array_columns[j]) {
+				iptr[iptr_count] = j;
+				iptr_count++;
+			}
+
 		}
-	
+	}
+
+
+
+	for (int i = 0; i <= Matrix->num_rows; i++) {
+		s1 = Matrix->array_columns[i];
+		s2 = Matrix->array_columns[i+1];
+		y[i] = z[i];
+		for (int k = s1; k <= s2; k++) {
+			if (Matrix->array_rows[k] < i) {
+				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_rows[k]];
+			}
+
+		}
+	}
+
+	for (int i = Matrix->num_rows; i <= 0; i--) {
+		s1 = Matrix->array_columns[i];
+		s2 = Matrix->array_columns[i + 1];
+		//y[i] = z[i];
+		for (int k = s1; k <= s2; k++) {
+			if (Matrix->array_rows[k] > i) {
+				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_rows[k]];
+			}
+
+		}
+		y[i] = y[i] / Matrix->array_values[iptr[i]];
+	}
+	free(iptr);
 }

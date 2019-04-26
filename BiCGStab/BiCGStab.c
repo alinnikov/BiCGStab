@@ -95,7 +95,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 	//Цикл
 	for (int num = 0; num < max_iterations && L2_norm>eps * eps; num++) {
-		GaussSolve(&LU, p_n, y_n);
+		GaussSolve(&LU, y_n, p_n);
 
 
 		Ay_n = spnv_pointer(*m, y_n);
@@ -106,7 +106,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		s(m, r_n, p_n, alpha_n, s_n, Ay_n);
 
-		GaussSolve(&LU, s_n, z_n);
+		GaussSolve(&LU, z_n, s_n);
 
 		Az_n = spnv_pointer(*m, s_n);
 
@@ -127,7 +127,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 			p_n[i] = r_n[i] - beta_n * omega_n * Ay_n[i] + beta_n * p_n[i];
 		}
 
-		if (number_of_iterations % 1 == 0) {
+		if (number_of_iterations % 1000 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
 		}
