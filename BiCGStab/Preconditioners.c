@@ -32,8 +32,8 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 		while (pr1 == 1) {
 			k = Matrix->array_columns[s1];
 			if (k > i) {
-				//break;
-				pr1 = 0;
+				break;
+				//pr1 = 0;
 			}
 			//printf("%d\n", iptr[k]);
 		//	printf("k = %d\n", k);

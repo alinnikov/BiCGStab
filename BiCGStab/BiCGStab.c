@@ -62,6 +62,9 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 	memcpy(LU.array_values, lu_values, m->num_values * sizeof(double));
 
+	//for (int i = 0; i <= LU.num_values; i++) {
+	//	printf("%lf\n", LU.array_values[i]);
+	//}
 
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));

@@ -89,6 +89,7 @@ int read_csr_matrix(struct CSR_matrix *m, char *name) {
 	while (!feof(fp) && k < m->num_values) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%d", &m->array_columns[k]);
+		//	printf("%d\n", m->array_columns[k]);
 			m->array_columns[k]--;
 		}
 		k++;
@@ -99,6 +100,7 @@ int read_csr_matrix(struct CSR_matrix *m, char *name) {
 	while (!feof(fp)) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%lf", &m->array_values[k]);
+		//	printf("%lf\n", m->array_values[k]);
 		}
 		k++;
 	}
