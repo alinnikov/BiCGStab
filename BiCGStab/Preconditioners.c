@@ -17,7 +17,7 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 		for (int j = Matrix->array_rows[i]; j < Matrix->array_rows[i + 1]; j++) {
 			if (i == Matrix->array_columns[j]) {
 				iptr[iptr_count] = j;
-				printf("%d\n", j-Matrix->array_rows[i]);
+			//	printf("%d\n", j-Matrix->array_rows[i]);
 				iptr_count++;
 			}
 
@@ -37,9 +37,9 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 			}
 			//printf("%d\n", iptr[k]);
 		//	printf("k = %d\n", k);
-		//	printf("Before = %lf\n", lu_values[s1]);
+			//printf("Before = %lf\n", lu_values[s1]);
 			lu_values[s1] = lu_values[s1] / lu_values[iptr[k]];
-			printf("After = %lf\n", lu_values[s1]);
+			//printf("After = %lf\n", lu_values[s1]);
 			s2 = s1;
 			s1++;
 			y1 = s1;
@@ -82,7 +82,7 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 
 void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 {
-	int s1, s2,b;
+	int s1, s2,i;
 
 	int *iptr = (int*)malloc((Matrix->num_rows) * sizeof(int));
 	int iptr_count = 0;
@@ -112,20 +112,20 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		}
 	}
 
-	for (b = Matrix->num_rows-1; b >= 0; b--) {
-		s1 = Matrix->array_rows[b];
-		s2 = Matrix->array_rows[b + 1];
+	for (int i = Matrix->num_rows-1; i >= 0; i--) {
+		s1 = Matrix->array_rows[i];
+		s2 = Matrix->array_rows[i + 1];
 		for (int k = s1; k < s2; k++) {
-			if (Matrix->array_columns[k] > b) {
-				y[b] = y[b] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
+			if (Matrix->array_columns[k] > i) {
+				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
 				//printf("Upper = %lf\n", y[i]);
 			}
 
 		}
 		//printf("iptr = %d\n", iptr[b]);
 		//printf("i = %d\n", i);
-		//printf("Value = %lf\n", Matrix->array_values[iptr[i]]);
-		y[b] = z[b] / Matrix->array_values[iptr[b]];
+		y[i] = z[i] / Matrix->array_values[iptr[i]];
+		//printf("y = %lf\n", y[i]);
 	}
 	free(iptr);
 }
