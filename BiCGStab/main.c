@@ -20,7 +20,7 @@ int main(void)
 	double eps = 0.00000001;
 	int max_iterations = 3000000;
 
-	char name[] = "bcsstk13.rb";
+	char name[] = "poli.rb";
 	read_csr_matrix(&m, name);
 
 	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));
@@ -30,7 +30,7 @@ int main(void)
 	for (int i = 0; i < count; i++) {
 
 		for (int i = 0; i < m.num_rows; i++) {
-			x[i] = 3.0;
+			x[i] = 9.0;
 			x_n[i] = 10.0;
 		}
 
