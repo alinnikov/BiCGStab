@@ -60,11 +60,15 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	double *z_n = (double*)malloc((m->num_rows) * sizeof(double));
 	ILU0(&LU, lu_values);
 
+
+
 	memcpy(LU.array_values, lu_values, m->num_values * sizeof(double));
 
-	//for (int i = 0; i <= LU.num_values; i++) {
-	//	printf("%lf\n", LU.array_values[i]);
-	//}
+	/*for (int i = 0; i <= LU.num_values; i++) {
+		//if ((LU.array_columns[i] - m->array_columns[i]) != 0) {
+			printf("%d\n", LU.array_columns[i] - m->array_columns[i]);
+		//}
+	}*/
 
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));
@@ -130,7 +134,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 			p_n[i] = r_n[i] - beta_n * omega_n * Ay_n[i] + beta_n * p_n[i];
 		}
 
-		if (number_of_iterations % 1000 == 0) {
+		if (number_of_iterations % 1 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
 		}

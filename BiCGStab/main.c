@@ -21,7 +21,7 @@ int main(void)
 	double eps = 0.00000001;
 	int max_iterations = 3000000;
 
-	char name[] = "1138_bus.rb";
+	char name[] = "test.rb";
 	read_csr_matrix(&m, name);
 
 	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));
