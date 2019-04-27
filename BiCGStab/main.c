@@ -18,10 +18,10 @@ int main(void)
 	struct CSR_matrix LU;
 	int count = 1;
 
-	double eps = 0.0000001;
+	double eps = 0.00000001;
 	int max_iterations = 10000;
 
-	char name[] = "test.rb";
+	char name[] = "ldoor.rb";
 	read_csr_matrix(&m, name);
 
 	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));

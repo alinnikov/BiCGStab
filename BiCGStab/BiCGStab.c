@@ -134,7 +134,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 			p_n[i] = r_n[i] - beta_n * omega_n * Ay_n[i] + beta_n * p_n[i];
 		}
 
-		if (number_of_iterations % 1000 == 0) {
+		if (number_of_iterations % 1 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
 		}
@@ -146,7 +146,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	}
 	
 	printf("Number of iterations = %d\n", number_of_iterations);
-	printf("L2_norm=%.60lf\n", L2_norm);
+	printf("L2_norm=%.60lf\n", sqrt(L2_norm));
 	printf("x[num_rows-1] = %.40lf\n", x_n[m->num_rows-1]);
 	return 0;
 }
