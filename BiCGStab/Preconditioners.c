@@ -2,8 +2,6 @@
 
 int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 	
-	//double *l = (double*)malloc((Matrix->num_rows) * sizeof(double));
-	//double *u = (double*)malloc((Matrix->num_rows) * sizeof(double));
 	int *iptr = (int*)malloc((Matrix->num_rows) * sizeof(int));
 	int s1, s2;
 	int y1, y2, y_end1, y_end2;
@@ -35,9 +33,6 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 				break;
 				//pr1 = 0;
 			}
-			//printf("%d\n", iptr[k]);
-		//	printf("k = %d\n", k);
-			//printf("Before = %lf\n", lu_values[s1]);
 			lu_values[s1] = lu_values[s1] / lu_values[iptr[k]];
 			//printf("After = %lf\n", lu_values[s1]);
 			s2 = s1;
@@ -90,7 +85,6 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		for (int j = Matrix->array_rows[i]; j < Matrix->array_rows[i + 1]; j++) {
 			if (i == Matrix->array_columns[j]) {
 				iptr[iptr_count] = j;
-				//printf("iptr = %d\n", iptr[iptr_count]);
 				iptr_count++;
 			}
 
@@ -106,7 +100,7 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		for (int k = s1; k < s2; k++) {
 			if (Matrix->array_columns[k] < i) {
 				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
-				//printf("Lower = %lf\n", y[i]);
+				printf("Lower = %lf\n", y[i]);
 			}
 
 		}
@@ -118,14 +112,11 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		for (int k = s1; k < s2; k++) {
 			if (Matrix->array_columns[k] > i) {
 				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
-				//printf("Upper = %lf\n", y[i]);
+				printf("Upper = %lf\n", y[i]);
 			}
 
 		}
-		//printf("iptr = %d\n", iptr[b]);
-		//printf("i = %d\n", i);
 		y[i] = z[i] / Matrix->array_values[iptr[i]];
-		//printf("y = %lf\n", y[i]);
 	}
 	free(iptr);
 }
