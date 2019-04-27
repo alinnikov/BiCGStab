@@ -115,7 +115,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		GaussSolve(&LU, z_n, s_n);
 
-		Az_n = spnv_pointer(*m, s_n);
+		Az_n = spnv_pointer(*m, z_n);
 
 		omega_n = omega(m, s_n, Az_n);
 

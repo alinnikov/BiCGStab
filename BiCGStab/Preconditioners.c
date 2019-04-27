@@ -43,9 +43,9 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 			s2 = s1;
 			s1++;
 			y1 = s1;
-			y_end1 = Matrix->array_columns[i + 1];
+			y_end1 = Matrix->array_rows[i + 1];
 			y2 = iptr[k] + 1;
-			y_end2 = Matrix->array_columns[k + 1];
+			y_end2 = Matrix->array_rows[k + 1];
 
 			if ((y_end1 > y1) && (y_end2 > y2)) {
 				continue;
