@@ -100,7 +100,7 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		for (int k = s1; k < s2; k++) {
 			if (Matrix->array_columns[k] < i) {
 				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
-				printf("Lower = %lf\n", y[i]);
+				//printf("Lower = %lf\n", y[i]);
 			}
 
 		}
@@ -112,7 +112,7 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z)
 		for (int k = s1; k < s2; k++) {
 			if (Matrix->array_columns[k] > i) {
 				y[i] = y[i] - Matrix->array_values[k] * y[Matrix->array_columns[k]];
-				printf("Upper = %lf\n", y[i]);
+				//printf("Upper = %lf\n", y[i]);
 			}
 
 		}
