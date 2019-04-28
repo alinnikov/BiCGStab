@@ -3,6 +3,7 @@
 #include <time.h>
 #include <dos.h> 
 #include "Preconditioners.h"
+#include <stdio.h>  
 
 
 int main(void)
@@ -17,11 +18,11 @@ int main(void)
 	struct CSR_matrix m; 
 	struct CSR_matrix LU;
 	int count = 1;
-
 	double eps = 0.00000001;
 	int max_iterations = 10000;
-
-	char name[] = "ldoor.rb";
+	char name[1024];
+	printf("Print name of matrix\n");
+	gets(name);
 	read_csr_matrix(&m, name);
 
 	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));
@@ -58,7 +59,7 @@ int main(void)
 	
 	}
 
-
+	//free(name);
 	unsigned long delta = GetTickCount() - start;
 	printf("used %lu milliseconds in average\n", delta/count);
 	getchar();
