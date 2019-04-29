@@ -15,5 +15,6 @@ struct CSR_matrix {
 int read_csr_matrix(struct CSR_matrix *m, char *name);
 int get_num_rows(char *name);
 int get_num_values(char *name);
+int create_csr_matrix(struct CSR_matrix *m, int *rowind, int *col, double *val);
 #endif
 

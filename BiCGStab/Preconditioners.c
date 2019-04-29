@@ -70,6 +70,8 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z, int *iptr)
 {
 	int s1, s2,i;
+
+	//Прямой ход
 	for (int i = 0; i < Matrix->num_rows; i++) {
 		s1 = Matrix->array_rows[i];
 		s2 = Matrix->array_rows[i+1];
@@ -81,6 +83,7 @@ void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z, int *iptr)
 		}
 	}
 
+	//Обратный ход
 	for (int i = Matrix->num_rows-1; i >= 0; i--) {
 		s1 = Matrix->array_rows[i];
 		s2 = Matrix->array_rows[i + 1];
@@ -102,7 +105,7 @@ int ILU0_fast(struct CSR_matrix *Matrix, double *lu_values) {
 	int s1, s2;
 	int y1, y2, y_end1, y_end2;
 	int pr1, pr2;
-	int k, b;
+	int k;
 
 	//Ищем диагональные элементы
 	int iptr_count = 0;

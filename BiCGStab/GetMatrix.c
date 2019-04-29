@@ -102,3 +102,48 @@ int read_csr_matrix(struct CSR_matrix *m, char *name) {
 	}
 	return 0;
 }
+
+
+int create_csr_matrix(struct CSR_matrix *m, int *rowind, int *col, double *val) {
+	
+	int n = _msize(rowind) / sizeof(int) - 1;
+	int nz = _msize(col) / sizeof(int);
+	printf("n=%d\n", n);
+	printf("nz=%d\n", nz);
+	printf("val=%d\n", _msize(val)/sizeof(double));
+
+	if (_msize(val)/sizeof(double) != nz) {
+		printf("Size of values array not equal n");
+		return 1;
+
+	};
+	if (rowind[n] != nz) {
+		printf("Last variable of array rows not equal nz");
+		return 2;
+
+	};
+
+
+	int sorted = 1;
+	for (int i = 0; i < n-1; i++) {
+		if (rowind[i] > rowind[i + 1]) {
+			sorted = 0;
+		}
+	}
+	
+	if (sorted != 1) {
+		printf("Array is not sorted");
+		return 1;
+	}
+
+	m->num_rows = n;
+	m->num_values = nz;
+	m->array_rows = (int*)malloc((m->num_rows + 1) * sizeof(int));
+	m->array_columns = (int*)malloc((m->num_values) * sizeof(int));
+	m->array_values = (double*)malloc((m->num_values) * sizeof(double));
+	memcpy(m->array_rows, rowind, (m->num_rows + 1) * sizeof(int));
+	memcpy(m->array_columns, col, m->num_values * sizeof(int));
+	memcpy(m->array_values, val, m->num_values * sizeof(double));
+
+	return 0;
+}

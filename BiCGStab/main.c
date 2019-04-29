@@ -24,6 +24,8 @@ int main(void)
 	gets(name);
 	read_csr_matrix(&m, name);
 
+	create_csr_matrix(&LU, m.array_rows, m.array_columns, m.array_values);
+
 	double *x_n = (double*)malloc((m.num_rows) * sizeof(double));
 	double *x = (double*)malloc((m.num_rows) * sizeof(double));
 	double *b;
