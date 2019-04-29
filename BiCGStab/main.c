@@ -5,7 +5,6 @@
 #include "Preconditioners.h"
 #include <stdio.h>  
 
-
 int main(void)
 {
 
@@ -13,12 +12,12 @@ int main(void)
 	printf("OpenMP is supported!\n");
 #endif 
 
-	unsigned long start = GetTickCount();
+	
 
 	struct CSR_matrix m; 
 	struct CSR_matrix LU;
 	int count = 1;
-	double eps = 0.00000001;
+	double eps = 0.000000000001;
 	int max_iterations = 10000;
 	char name[1024];
 	printf("Print name of matrix\n");
@@ -31,21 +30,12 @@ int main(void)
 	double *lu_values = (double*)malloc((m.num_values) * sizeof(double));
 	double *result = (double*)malloc((m.num_rows) * sizeof(double));
 
-	//ILU0(&m, lu_values);
-
 	for (int i = 0; i < m.num_rows; i++) {
 		x[i] = 9.0;
 		x_n[i] = 10.0;
 	}
 
-	
-
-	//GaussSolve(&m, x, result);
-
-	//for (int i = 0; i < m.num_rows; i++) {
-//		printf("Value = %lf\n", result[i]);
-	//}
-
+	unsigned long start = GetTickCount();
 	for (int i = 0; i < count; i++) {
 
 		for (int i = 0; i < m.num_rows; i++) {
@@ -59,7 +49,6 @@ int main(void)
 	
 	}
 
-	//free(name);
 	unsigned long delta = GetTickCount() - start;
 	printf("used %lu milliseconds in average\n", delta/count);
 	getchar();

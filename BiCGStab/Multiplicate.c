@@ -20,7 +20,7 @@ int multiplicate(struct CSR_matrix Matrix, double *x, double *b) {
 // spmv
 double *spnv_pointer(struct CSR_matrix Matrix, double *x) {
 	double *b = calloc((Matrix.num_rows), sizeof(double));
-#pragma omp parallel for num_threads(2)
+#pragma omp parallel for num_threads(3)
 	for (int i = 0; i < Matrix.num_rows; i++)
 	{
 		for (int j = Matrix.array_rows[i]; j < Matrix.array_rows[i + 1]; j++) {
@@ -36,7 +36,7 @@ double *spnv_pointer(struct CSR_matrix Matrix, double *x) {
 // dot product
 double dot_product(double *a, double *b, int num) {
 	double result=0;
-#pragma omp parallel shared(result)  num_threads(2)
+#pragma omp parallel shared(result)  num_threads(3)
 #pragma omp for reduction(+:result)
 	for (int i = 0; i < num; i++) {
 		result += a[i] * b[i];

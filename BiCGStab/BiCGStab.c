@@ -58,17 +58,10 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	double *result = (double*)malloc((m->num_rows) * sizeof(double));
 	double *y_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *z_n = (double*)malloc((m->num_rows) * sizeof(double));
-	ILU0(&LU, lu_values);
-
-
-
+	
+	//ILU
+	ILU0_fast(&LU, lu_values);
 	memcpy(LU.array_values, lu_values, m->num_values * sizeof(double));
-
-	/*for (int i = 0; i <= LU.num_values; i++) {
-		//if ((LU.array_columns[i] - m->array_columns[i]) != 0) {
-			printf("%d\n", LU.array_columns[i] - m->array_columns[i]);
-		//}
-	}*/
 
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));
@@ -82,27 +75,36 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	double omega_n;
 	double beta_n;
 	double r0help_rn;
-
 	double L2_norm = 1.0;
 	int number_of_iterations = 0;
+	
 	// Задаём A*x0
-
 	Ax_n = spnv_pointer(*m, x_n);
 	
 	//Задаём r0*, r0 и p0
-
 	for (int i = 0; i < m->num_rows; i++) {
 		r_n[i] = b[i] - Ax_n[i];
 		r_0_help[i] = r_n[i];
 		p_n[i] = r_n[i];
 	}
 
+	//Считаем диагональный вектор
+	int *iptr = (int*)malloc((m->num_rows) * sizeof(int));
+	int iptr_count = 0;
+	for (int i = 0; i < m->num_rows; i++) {
+		for (int j = m->array_rows[i]; j < m->array_rows[i + 1]; j++) {
+			if (i == m->array_columns[j]) {
+				iptr[iptr_count] = j;
+				iptr_count++;
+			}
 
+		}
+	}
 
 
 	//Цикл
 	for (int num = 0; num < max_iterations && L2_norm>eps * eps; num++) {
-		GaussSolve(&LU, y_n, p_n);
+		GaussSolve(&LU, y_n, p_n, iptr);
 
 
 		Ay_n = spnv_pointer(*m, y_n);
@@ -113,7 +115,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		s(m, r_n, p_n, alpha_n, s_n, Ay_n);
 
-		GaussSolve(&LU, z_n, s_n);
+		GaussSolve(&LU, z_n, s_n,iptr);
 
 		Az_n = spnv_pointer(*m, z_n);
 

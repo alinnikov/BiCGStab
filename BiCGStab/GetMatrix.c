@@ -15,7 +15,6 @@ int get_num_rows(char *name) {
 	for (int i = 0; i < 2; i++)
 	{
 		fgets(str, 1024, matrix_file);
-		//printf("%s", str);
 	}
 	//»щем число строк
 	while ((fscanf(matrix_file, "%s", &str) != EOF && count_of_values < 3))
@@ -41,7 +40,6 @@ int get_num_values(char *name) {
 	for (int i = 0; i < 2; i++)
 	{
 		fgets(str, 1024, matrix_file);
-		//printf("%s", str);
 	}
 	//»щем число значений
 	while ((fscanf(matrix_file, "%s", &str) != EOF && count_of_values < 5))
@@ -89,7 +87,6 @@ int read_csr_matrix(struct CSR_matrix *m, char *name) {
 	while (!feof(fp) && k < m->num_values) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%d", &m->array_columns[k]);
-		//	printf("%d\n", m->array_columns[k]);
 			m->array_columns[k]--;
 		}
 		k++;
@@ -100,14 +97,8 @@ int read_csr_matrix(struct CSR_matrix *m, char *name) {
 	while (!feof(fp)) {
 		if (fscanf(fp, "%s", str)) {
 			sscanf(str, "%lf", &m->array_values[k]);
-		//	printf("%lf\n", m->array_values[k]);
 		}
 		k++;
 	}
 	return 0;
-
-	//printf("Value0 = %lf\n", m->array_values[0]);
-	//printf("Valuek = %lf\n", m->array_values[k-1]);
-	//printf("k = %d\n", k-1);
-	//printf("N = %d\n", m->num_values);
 }
