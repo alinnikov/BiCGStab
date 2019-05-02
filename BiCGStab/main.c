@@ -11,7 +11,7 @@ int main(void)
 	printf("OpenMP is supported!\n");
 #endif 
 
-	unsigned long start = GetTickCount();
+	
 
 	struct CSR_matrix m; 
 
@@ -28,6 +28,7 @@ int main(void)
 	double *x = (double*)malloc((m.num_rows) * sizeof(double));
 	double *b;
 
+	unsigned long start = GetTickCount();
 	for (int i = 0; i < count; i++) {
 
 		for (int i = 0; i < m.num_rows; i++) {
