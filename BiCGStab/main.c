@@ -32,14 +32,8 @@ int main(void)
 	double *lu_values = (double*)malloc((m.num_values) * sizeof(double));
 	double *result = (double*)malloc((m.num_rows) * sizeof(double));
 
-	for (int i = 0; i < m.num_rows; i++) {
-		x[i] = 9.0;
-		x_n[i] = 10.0;
-	}
-
 	unsigned long start = GetTickCount();
 	for (int i = 0; i < count; i++) {
-
 		for (int i = 0; i < m.num_rows; i++) {
 			x[i] = 9.0;
 			x_n[i] = 10.0;

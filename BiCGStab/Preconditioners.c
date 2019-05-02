@@ -69,7 +69,7 @@ int ILU0(struct CSR_matrix *Matrix, double *lu_values) {
 
 void GaussSolve(struct CSR_matrix *Matrix, double* y, double* z, int *iptr)
 {
-	int s1, s2,i;
+	int s1, s2;
 
 	//Прямой ход
 	for (int i = 0; i < Matrix->num_rows; i++) {
@@ -150,7 +150,8 @@ int ILU0_fast(struct CSR_matrix *Matrix, double *lu_values) {
 
 			for (int j = y2; j < y_end2; j++) {
 				if (tempvec[Matrix->array_columns[j]] == 1) {
-					lu_values[tempjptr[Matrix->array_columns[j]]] = lu_values[tempjptr[Matrix->array_columns[j]]] - lu_values[s2] * lu_values[j];
+					lu_values[tempjptr[Matrix->array_columns[j]]] = lu_values[tempjptr[Matrix->array_columns[j]]] 
+						- lu_values[s2] * lu_values[j];
 				}
 			}
 

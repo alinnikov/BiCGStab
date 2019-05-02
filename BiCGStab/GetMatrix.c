@@ -118,7 +118,7 @@ int create_csr_matrix(struct CSR_matrix *m, int *rowind, int *col, double *val) 
 
 	};
 	if (rowind[n] != nz) {
-		printf("Last variable of array rows not equal nz");
+		printf("Last variable of rows array not equal nz");
 		return 2;
 
 	};

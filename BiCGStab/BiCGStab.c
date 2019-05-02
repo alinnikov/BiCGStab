@@ -43,7 +43,6 @@ double omega(struct CSR_matrix *m, double *s_n, double *As_n) {
 
 int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations) {
 	//Структура с матрицей M
-	
 	struct CSR_matrix LU;
 	LU.num_rows = m->num_rows;
 	LU.num_values = m->num_values;
@@ -53,7 +52,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	memcpy(LU.array_rows, m->array_rows, (m->num_rows+1) * sizeof(int));
 	memcpy(LU.array_columns, m->array_columns, m->num_values * sizeof(int));
 	memcpy(LU.array_values, m->array_values, m->num_values * sizeof(double));
-
+	//Переменные для ILU
 	double *lu_values = (double*)malloc((m->num_values) * sizeof(double));
 	double *result = (double*)malloc((m->num_rows) * sizeof(double));
 	double *y_n = (double*)malloc((m->num_rows) * sizeof(double));
@@ -136,7 +135,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 			p_n[i] = r_n[i] - beta_n * omega_n * Ay_n[i] + beta_n * p_n[i];
 		}
 
-		if (number_of_iterations % 1 == 0) {
+		if (number_of_iterations % 100 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
 			printf("L2_norm=%.40lf\n", L2_norm);
 		}
