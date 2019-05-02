@@ -142,10 +142,10 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		L2_norm = dot_product(r_n,r_n,m->num_rows);
 		number_of_iterations++;
+		
 		free(Ay_n);
 		free(Az_n);
 	}
-	
 	printf("Number of iterations = %d\n", number_of_iterations);
 	printf("L2_norm=%.60lf\n", sqrt(L2_norm));
 	printf("x[num_rows-1] = %.40lf\n", x_n[m->num_rows-1]);
