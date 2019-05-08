@@ -54,14 +54,14 @@ int GMRes(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iter
 
 	k = number;
 
-	for (int j = 1; j < number; j++) {
+	for (int j = 0; j < number; j++) {
 		
 		for (int i = 0; i < m->num_rows; i++) {
 				V[i*j + i] = w[i] * antibeta;
 				//Without Preconditioner
 				Z[i*j + i] = V[i*j + i];
 			}
-		
+		printf("%lf", Z[j*m->num_rows]);
 		w = spnv_pointer(*m, &Z[j*m->num_rows]);
 
 		for (int i = 0; i <= j; i++) {
