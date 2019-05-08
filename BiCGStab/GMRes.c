@@ -53,11 +53,8 @@ int GMRes(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iter
 	}
 
 	k = number;
-	//for (int i = 0; i < m->num_rows; i++) {
-	//	V[i] = r_j[i] * antibeta;
-	//}
 
-	for (int j = 0; j < number; j++) {
+	for (int j = 1; j < number; j++) {
 		
 		for (int i = 0; i < m->num_rows; i++) {
 				V[i*j + i] = w[i] * antibeta;
@@ -84,6 +81,8 @@ int GMRes(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iter
 
 		h_tilda = H[j*number + j];
 		beta = dot_product(w, w, m->num_rows);
+
+		H[j*number + j] = sqrt(h_tilda*h_tilda + beta * beta);
 
 		c[j] = beta / H[j*number + j];
 		s[j] = h_tilda / H[j*number + j];
