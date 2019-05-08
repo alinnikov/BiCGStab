@@ -3,7 +3,6 @@
 #include <io.h> 
 #include "GetMatrix.h"
 
-#pragma once
 #ifndef BISGSTAB	
 #define BISGSTAB
 int BiCGStab(struct CSR_matrix *Matrix, double *b, double *x_n, double eps, int max_iterations);

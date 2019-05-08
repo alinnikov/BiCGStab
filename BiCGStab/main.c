@@ -37,8 +37,8 @@ int main(void)
 		}
 
 		b = spnv_pointer(m, x);
-
-		BiCGStab(&m, b, x_n, eps, max_iterations);
+		GMRes(&m, b, x_n, eps, max_iterations);
+	//	BiCGStab(&m, b, x_n, eps, max_iterations);
 	
 	}
 	unsigned long delta = GetTickCount() - start;

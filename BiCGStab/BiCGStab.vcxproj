@@ -126,11 +126,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BiCGStab.h" />
+    <ClInclude Include="GMRes.h" />
     <ClInclude Include="GetMatrix.h" />
     <ClInclude Include="Multiplicate.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BiCGStab.c" />
+    <ClCompile Include="GMRes.c" />
     <ClCompile Include="GetMatrix.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Multiplicate.c" />
