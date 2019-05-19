@@ -44,3 +44,28 @@ double dot_product(double *a, double *b, int num) {
 	
 	return result;
 }
+
+void Gauss(double *Hess, double* b, double* x, int n, int m) {
+	int i, j;   
+	
+	for (i = m - 1; i >= 0; i--) { 
+		x[i] = b[i];     
+		for (j = i + 1; j <= m; j++) { 
+		//	printf("Hess = %g \n",Hess[i * n + j] );
+			x[i] -= x[j] * Hess[i * n + j]; }
+	x[i] /= Hess[i * n + i];
+	}
+}
+
+void MatrMultiply(int m, int n, double *matrix, double *vektor, double *res){
+	
+	for (int i = 0; i < n; i++)
+	{
+		double temp = 0;
+		for (int j = 0; j < m; j++)
+		{
+			temp += matrix[j*n + i] * vektor[j];
+		}
+		res[i] = temp;
+	}
+}
