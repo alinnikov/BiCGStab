@@ -18,7 +18,7 @@ int multiplicate(struct CSR_matrix Matrix, double *x, double *b) {
 }
 
 // spmv
-double *spnv_pointer(struct CSR_matrix Matrix, double *x) {
+double *spmv(struct CSR_matrix Matrix, double *x) {
 	double *b = calloc((Matrix.num_rows), sizeof(double));
 #pragma omp parallel for num_threads(2)
 	for (int i = 0; i < Matrix.num_rows; i++)
@@ -31,7 +31,6 @@ double *spnv_pointer(struct CSR_matrix Matrix, double *x) {
 	}
 	return b;
 }
-
 
 // dot product
 double dot_product(double *a, double *b, int num) {
@@ -50,10 +49,10 @@ void Gauss(double *Hess, double* b, double* x, int n, int m) {
 	
 	for (i = m - 1; i >= 0; i--) { 
 		x[i] = b[i];     
-		for (j = i + 1; j <= m; j++) { 
-		//	printf("Hess = %g \n",Hess[i * n + j] );
-			x[i] -= x[j] * Hess[i * n + j]; }
-	x[i] /= Hess[i * n + i];
+		for (j = i + 1; j < m; j++) { 
+			x[i] -= x[j] * Hess[i * n + j]; 
+		}
+		x[i] /= Hess[i * n + i];
 	}
 }
 
@@ -64,7 +63,7 @@ void MatrMultiply(int m, int n, double *matrix, double *vektor, double *res){
 		double temp = 0;
 		for (int j = 0; j < m; j++)
 		{
-			temp += matrix[j*n + i] * vektor[j];
+			temp += matrix[i*m + j] * vektor[j];
 		}
 		res[i] = temp;
 	}

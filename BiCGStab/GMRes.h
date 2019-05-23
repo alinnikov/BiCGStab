@@ -5,6 +5,6 @@
 #pragma once
 #ifndef FGMRES
 #define FGMRES
-int GMRes(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations);
+int GMRes(struct CSR_matrix *A, double *b, double *x, double tol, int max_iter, int m);
 
 #endif

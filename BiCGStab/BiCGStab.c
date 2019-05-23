@@ -41,7 +41,7 @@ double omega(struct CSR_matrix *m, double *s_n, double *As_n) {
 }
 
 
-int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_iterations) {
+int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double tol, int max_iter) {
 	//Создаём необходимые массивы
 	double *r_n = (double*)malloc((m->num_rows) * sizeof(double));
 	double *r_0_help = (double*)malloc((m->num_rows) * sizeof(double));
@@ -59,7 +59,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	int number_of_iterations = 0;
 	// Задаём A*x0
 
-	Ax_n = spnv_pointer(*m, x_n);
+	Ax_n = spmv(*m, x_n);
 	
 	//Задаём r0*, r0 и p0
 
@@ -70,9 +70,9 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	}
 
 	//Цикл
-	for (int num = 0; num < max_iterations && L2_norm>eps * eps; num++) {
+	for (int num = 0; num < max_iter && L2_norm>tol * tol; num++) {
 
-		Ap_n = spnv_pointer(*m, p_n);
+		Ap_n = spmv(*m, p_n);
 
 		r0help_rn = dot_product(r_0_help, r_n, m->num_rows);
 
@@ -80,7 +80,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		s(m, r_n, p_n, alpha_n, s_n, Ap_n);
 
-		As_n = spnv_pointer(*m, s_n);
+		As_n = spmv(*m, s_n);
 
 		omega_n = omega(m, s_n, As_n);
 
