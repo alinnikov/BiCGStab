@@ -13,7 +13,7 @@ int main(void)
 
 	struct CSR_matrix A; 
 
-	int count = 1000;
+	int count = 1;
 
 	double tol = 1e-12;
 	int max_iter = 10000;

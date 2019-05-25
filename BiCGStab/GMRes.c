@@ -12,7 +12,8 @@ int GMRes(struct CSR_matrix *A, double *b, double *x, double tol, int max_iter, 
 	double gamma;
 	double h;
 	double h_tilda;
-	
+	double x_max = 0;
+	int i_max=0;
 	double *r = (double*)malloc((A->num_rows) * sizeof(double));
 	double *Ax = (double*)malloc((A->num_rows) * sizeof(double));
 	
@@ -100,16 +101,21 @@ Start:
 		}
 		y[i] /= Hess[i][i];
 	}
-
+	
 	// x = x + Z * y
 	for (int i = 0; i < A->num_rows; i++) {
 		for (int j = 0; j < k; j++) {
-			x[i] += Z[j * A->num_rows + i] * y[j];
+			x[i] += Z[j * A->num_rows + i] * y[j];	
+		}
+		if (fabs(x[i]) > x_max) {
+			x_max = fabs(x[i]);
+			i_max = i;
 		}
 	}
 
 	free(y);
-
+	printf("%e\n", x_max);
+	printf("%d\n", i_max);
 	/*
 	Ax = spmv(*A, x);
 	for (int i = 0; i < A->num_rows; i++) {
@@ -118,7 +124,7 @@ Start:
 	printf("true__residual_norm = %e\n", sqrt(dot_product(r, r, A->num_rows)));
 	*/
 
-	if ((fabs(gamma) > tol) && (iter <= max_iter)) {
+	if ((fabs(gamma) > tol && (iter<=max_iter))) {
 		goto Start;
 	}
 
