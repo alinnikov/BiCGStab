@@ -78,7 +78,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 	int number_of_iterations = 0;
 	
 	// Задаём A*x0
-	Ax_n = spnv_pointer(*m, x_n);
+	Ax_n = spmv(*m, x_n);
 	
 	//Задаём r0*, r0 и p0
 	for (int i = 0; i < m->num_rows; i++) {
@@ -106,7 +106,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 		GaussSolve(&LU, y_n, p_n, iptr);
 
 
-		Ay_n = spnv_pointer(*m, y_n);
+		Ay_n = spmv(*m, y_n);
 
 		r0help_rn = dot_product(r_0_help, r_n, m->num_rows);
 
@@ -116,7 +116,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double eps, int max_i
 
 		GaussSolve(&LU, z_n, s_n,iptr);
 
-		Az_n = spnv_pointer(*m, z_n);
+		Az_n = spmv(*m, z_n);
 
 		omega_n = omega(m, s_n, Az_n);
 

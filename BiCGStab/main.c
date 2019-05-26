@@ -4,7 +4,7 @@
 #include <dos.h> 
 #include "Preconditioners.h"
 #include <stdio.h>  
-
+#include "GMRes.h" 
 int main(void)
 {
 
@@ -17,6 +17,7 @@ int main(void)
 	struct CSR_matrix m; 
 	struct CSR_matrix LU;
 	int count = 1;
+	int number = 30;
 	double eps = 0.000000000001;
 	int max_iterations = 10000;
 	char name[1024];
@@ -39,9 +40,9 @@ int main(void)
 			x_n[i] = 10.0;
 		}
 
-		b = spnv_pointer(m, x);
-
-		BiCGStab(&m, b, x_n, eps, max_iterations);
+		b = spmv(m, x);
+		GMRes(&m, b, x_n, eps, max_iterations, number);
+		//BiCGStab(&m, b, x_n, eps, max_iterations);
 	
 	}
 
