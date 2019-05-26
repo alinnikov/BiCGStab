@@ -8,4 +8,5 @@
 int multiplicate(struct CSR_matrix Matrix, double *x, double *b);
 double dot_product(double *a, double *b, int num);
 double *spmv(struct CSR_matrix Matrix, double *x);
+int spmv_GMRes(struct CSR_matrix Matrix, double *x, double *b);
 #endif

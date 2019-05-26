@@ -92,7 +92,7 @@ Start:
 		GaussSolve(&LU, &Z[j*A->num_rows], &V[j*A->num_rows], iptr);
 
 		// Arnoldi orthogonalization
-		w = spmv(*A, &Z[j * A->num_rows]);
+		spmv_GMRes(*A, &Z[j * A->num_rows], w);
 
 		for (int i = 0; i <= j; i++) {
 			Hess[i][j] = dot_product(w, &V[i * A->num_rows], A->num_rows);
@@ -162,6 +162,7 @@ Start:
 	*/
 
 	if ((fabs(gamma) > tol && (iter <= max_iter))) {	
+		free(Ax);
 		goto Start;
 	}
 

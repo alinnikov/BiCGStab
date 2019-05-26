@@ -157,4 +157,8 @@ int ILU0_fast(struct CSR_matrix *Matrix, double *lu_values) {
 
 		}
 	}
+	free(iptr);
+	free(tempvec);
+	free(tempjptr);
+	return 0;
 }

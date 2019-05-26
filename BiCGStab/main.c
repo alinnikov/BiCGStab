@@ -17,7 +17,7 @@ int main(void)
 	struct CSR_matrix m; 
 	struct CSR_matrix LU;
 	int count = 1;
-	int number = 30;
+	//int number = 30;
 	double eps = 0.000000000001;
 	int max_iterations = 10000;
 	char name[1024];
@@ -34,12 +34,12 @@ int main(void)
 	double *result = (double*)malloc((m.num_rows) * sizeof(double));
 
 	unsigned long start = GetTickCount();
-	for (int i = 0; i < count; i++) {
+	for (int number = 100; number > 10; number = number-1) {
 		for (int i = 0; i < m.num_rows; i++) {
 			x[i] = 9.0;
 			x_n[i] = 10.0;
 		}
-
+		printf("number = %d\n", number);
 		b = spmv(m, x);
 		GMRes(&m, b, x_n, eps, max_iterations, number);
 		//BiCGStab(&m, b, x_n, eps, max_iterations);
