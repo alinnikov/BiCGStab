@@ -40,7 +40,7 @@ int main(void)
 		rhs = spmv(A, x_ref);
 
 		//GMRes(&A, rhs, x, tol, max_iter, m);
-		BiCGStab(&m, rhs, x, tol, max_iter);
+		BiCGStab(&A, rhs, x, tol, max_iter);
 	
 	}
 	unsigned long delta = GetTickCount() - start;

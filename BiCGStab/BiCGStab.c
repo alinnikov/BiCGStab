@@ -101,7 +101,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double tol, int max_i
 
 		if (number_of_iterations % 100 == 0) {
 			printf("%.40lf\n", x_n[m->num_rows-1]);
-			printf("L2_norm=%.40lf\n", L2_norm);
+			printf("L2_norm=%e\n", sqrt(L2_norm));
 		}
 
 		L2_norm = dot_product(r_n,r_n,m->num_rows);
@@ -111,7 +111,7 @@ int BiCGStab(struct CSR_matrix *m, double *b, double *x_n, double tol, int max_i
 	}
 	
 	printf("Number of iterations = %d\n", number_of_iterations);
-	printf("L2_norm=%.60lf\n", L2_norm);
-	printf("x[num_rows-1] = %.40lf\n", x_n[m->num_rows-1]);
+	printf("L2_norm=%e\n", sqrt(L2_norm));
+	printf("x[num_rows-1] = %e\n", x_n[m->num_rows-1]);
 	return 0;
 }
